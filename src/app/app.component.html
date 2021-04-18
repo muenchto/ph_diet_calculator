@@ -1,0 +1,19 @@
+<!-- This wrapper is necessary for applying multiple themes -->
+<div class="mat-app-background">
+
+  <app-header></app-header>
+
+  <!-- Content -->
+  <div class="content">
+    <app-amount-slider *ngFor="let slider of sliders; let idx = index"
+                       [name]="slider.name"
+                       [max]="globalMax"
+                       [value]="slider.value"
+    (input)="updateSliders(idx, $event)">
+
+    </app-amount-slider>
+
+    <h3>{{actualGlobal}}</h3>
+
+  </div>
+</div>

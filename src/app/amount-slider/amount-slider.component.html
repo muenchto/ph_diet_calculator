@@ -1,0 +1,15 @@
+<mat-card class="result">
+  <mat-card-content>
+    <h2 class="example-h2">{{name}}</h2>
+
+    <mat-slider
+      class="example-margin"
+      [max]="max"
+      [min]="min"
+      [step]="step"
+      [thumbLabel]="thumbLabel"
+      [value]="_value"
+    (input)="input.emit($event)">
+    </mat-slider>
+  </mat-card-content>
+</mat-card>
