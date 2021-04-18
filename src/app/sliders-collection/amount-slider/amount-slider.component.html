@@ -1,6 +1,6 @@
 <mat-card class="result">
   <mat-card-content>
-    <h2 class="example-h2">{{ name }}</h2>
+    <h2 class="example-h2">{{ name }} ({{ min }} - {{ max }})</h2>
 
     <mat-slider
       class="example-margin"
@@ -8,9 +8,10 @@
       [min]="min"
       [step]="step"
       [thumbLabel]="thumbLabel"
-      [value]="_value"
+      [value]="value"
       (input)="input.emit($event)"
     >
     </mat-slider>
+    <h4>{{ value }}</h4>
   </mat-card-content>
 </mat-card>

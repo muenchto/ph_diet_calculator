@@ -7,20 +7,14 @@ import { MatSliderChange } from '@angular/material/slider';
   styleUrls: ['./amount-slider.component.scss'],
 })
 export class AmountSliderComponent {
-  @Input()
-  name = 'Slider';
-  _value: number = 0;
-  @Input()
-  set value(val: number) {
-    this._value = val;
-  }
+  @Input() name = 'Slider';
+  @Input() value = 0;
+  @Input() max = 100;
+  @Input() min = 0;
+
   @Output()
   input = new EventEmitter<MatSliderChange>();
 
-  @Input()
-  max = 100;
-
-  min = 0;
   step = 1;
   thumbLabel = true;
 }

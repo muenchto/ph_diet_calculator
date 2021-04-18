@@ -9,14 +9,20 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { HeaderComponent } from './header/header.component';
-import { AmountSliderComponent } from './amount-slider/amount-slider.component';
+import { AmountSliderComponent } from './sliders-collection/amount-slider/amount-slider.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { SlidersCollectionComponent } from './sliders-collection/sliders-collection.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, AmountSliderComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    AmountSliderComponent,
+    SlidersCollectionComponent,
+  ],
   imports: [
     CommonModule,
     BrowserModule,
