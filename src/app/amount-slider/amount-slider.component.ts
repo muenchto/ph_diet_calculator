@@ -1,18 +1,17 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {MatSliderChange} from "@angular/material/slider";
-
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatSliderChange } from '@angular/material/slider';
 
 @Component({
   selector: 'app-amount-slider',
   templateUrl: './amount-slider.component.html',
-  styleUrls: ['./amount-slider.component.scss']
+  styleUrls: ['./amount-slider.component.scss'],
 })
 export class AmountSliderComponent {
   @Input()
   name = 'Slider';
-   _value: number = 0;
+  _value: number = 0;
   @Input()
-  set value(val: number){
+  set value(val: number) {
     this._value = val;
   }
   @Output()
@@ -24,6 +23,4 @@ export class AmountSliderComponent {
   min = 0;
   step = 1;
   thumbLabel = true;
-
-
 }
