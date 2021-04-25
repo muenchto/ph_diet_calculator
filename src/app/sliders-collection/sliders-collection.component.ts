@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {
   SingleSliderConfig,
   SliderCollectionConfig,
-} from './slider-collection-config';
+} from './slider-collection-config.definition';
 import { MatSliderChange } from '@angular/material/slider';
 
 @Component({
@@ -12,68 +12,130 @@ import { MatSliderChange } from '@angular/material/slider';
 })
 export class SlidersCollectionComponent {
   collectionConfig: SliderCollectionConfig = {
-    globalMax: 100,
-    globalMin: 100,
+    globalMax: 0,
     sliders: [
       {
-        name: 'Gemüse',
-        initialValue: 'equalShare',
+        name: 'Whole Grains',
+        referenceValue: 811,
+        referenceGram: 232,
+        min: 0,
+        max: 429.09,
+      },
+      {
+        name: 'Potatoes, cassava',
+        referenceValue: 39,
+        referenceGram: 50,
         min: 0,
         max: 100,
       },
       {
-        name: 'Fleisch',
-        initialValue: 'equalShare',
+        name: 'All vegetables',
+        referenceValue: 78,
+        referenceGram: 300,
+        min: 200,
+        max: 600,
+      },
+      {
+        name: 'Fruits',
+        referenceValue: 126,
+        referenceGram: 200,
+        min: 100,
+        max: 300,
+      },
+      {
+        name: 'Dairy Foods',
+        referenceValue: 153,
+        referenceGram: 250,
+        min: 0,
+        max: 500,
+      },
+      {
+        name: 'Beef, Lamp, Pork',
+        referenceValue: 30,
+        referenceGram: 14,
+        min: 0,
+        max: 14,
+      },
+      {
+        name: 'Chicken, other poultry',
+        referenceValue: 62,
+        referenceGram: 29,
+        min: 0,
+        max: 58,
+      },
+      {
+        name: 'Eggs',
+        referenceValue: 19,
+        referenceGram: 13,
+        min: 0,
+        max: 25,
+      },
+      {
+        name: 'Fish',
+        referenceValue: 40,
+        referenceGram: 28,
         min: 0,
         max: 100,
       },
       {
-        name: 'Fisch',
-        initialValue: 'equalShare',
+        name: 'Dry beans, lentils &peas',
+        referenceValue: 172,
+        referenceGram: 50,
         min: 0,
         max: 100,
       },
       {
-        name: 'Milchprodukte',
-        initialValue: 'equalShare',
+        name: 'Soy foods',
+        referenceValue: 112,
+        referenceGram: 25,
         min: 0,
-        max: 100,
+        max: 50,
       },
       {
-        name: 'Hülsenfrüchte',
-        initialValue: 'equalShare',
+        name: 'Nuts',
+        referenceValue: 291,
+        referenceGram: 50,
         min: 0,
-        max: 100,
+        max: 75,
+      },
+      {
+        name: 'Unsaturated oils',
+        referenceValue: 447,
+        referenceGram: 51.3,
+        min: 20,
+        max: 91.8,
+      },
+      {
+        name: 'added sugar',
+        referenceValue: 120,
+        referenceGram: 31,
+        min: 0,
+        max: 31,
       },
     ],
   };
 
-  sliderVals = this.collectionConfig.sliders.map((slider) =>
-    slider.initialValue === 'equalShare'
-      ? this.collectionConfig.globalMax / this.collectionConfig.sliders.length
-      : slider.initialValue
+  sliderVals = this.collectionConfig.sliders.map(
+    (slider) => slider.referenceValue
   );
 
-  actualGlobal = this.collectionConfig.globalMax;
+  sumOfEnergy = this.getSumOfSliderVals();
 
-  updateSliders(
-    adjustedSliderIdx: number,
-    sliderChange: MatSliderChange
-  ): void {
-    if (sliderChange.value === null) {
-      return;
-    }
-    const sliderValDiff =
-      sliderChange.value - this.sliderVals[adjustedSliderIdx];
+  updateOtherSliders(adjustedSliderIdx: number, newSliderVal: number): void {
+    const sliderValDiff = newSliderVal - this.sliderVals[adjustedSliderIdx];
 
-    const isSliderAtLimit = (val: number, sliderConfig: SingleSliderConfig) =>
-      sliderValDiff > 0 ? val <= sliderConfig.min : val >= sliderConfig.max;
-
-    const numOfOtherSliders = this.sliderVals
-      .filter((_, idx) => idx !== adjustedSliderIdx)
-      .filter(
-        (val, idx) => !isSliderAtLimit(val, this.collectionConfig.sliders[idx])
-      ).length;
+    const isSliderAtLimit = (val: number, sliderConfig: SingleSliderConfig) => {
+      const sliderValInGram =
+        val / (sliderConfig.referenceValue / sliderConfig.referenceGram);
+      return sliderValDiff > 0
+        ? sliderValInGram <= sliderConfig.min
+        : sliderValInGram >= sliderConfig.max;
+    };
+    const numOfOtherSliders = this.sliderVals.filter(
+      (val, idx) =>
+        idx !== adjustedSliderIdx &&
+        !isSliderAtLimit(val, this.collectionConfig.sliders[idx])
+    ).length;
 
     const diffForOtherSliders = sliderValDiff / numOfOtherSliders;
 
@@ -86,8 +148,11 @@ export class SlidersCollectionComponent {
         return val;
       }
     });
-    console.log(this.sliderVals);
 
-    this.actualGlobal = this.sliderVals.reduce((acc, val) => acc + val, 0);
+    this.sumOfEnergy = this.getSumOfSliderVals();
+  }
+
+  private getSumOfSliderVals(): number {
+    return Math.round(this.sliderVals.reduce((acc, val) => acc + val, 0));
   }
 }

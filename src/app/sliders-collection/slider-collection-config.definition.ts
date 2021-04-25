@@ -1,12 +1,12 @@
 export interface SingleSliderConfig {
   name: string;
-  initialValue: number | 'equalShare';
+  referenceValue: number;
+  referenceGram: number;
   min: number;
   max: number;
 }
 
 export interface SliderCollectionConfig {
   globalMax: number;
-  globalMin: number;
   sliders: SingleSliderConfig[];
 }

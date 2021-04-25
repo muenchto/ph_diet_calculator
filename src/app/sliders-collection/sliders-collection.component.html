@@ -1,10 +1,13 @@
-<app-amount-slider
-  *ngFor="let slider of collectionConfig.sliders; let idx = index"
-  [name]="slider.name"
-  [max]="slider.max"
-  [min]="slider.min"
-  [value]="sliderVals[idx]"
-  (input)="updateSliders(idx, $event)"
->
-</app-amount-slider>
-<h3>{{ actualGlobal }}</h3>
+<h3>Gesamtenergie {{ sumOfEnergy }} kcal</h3>
+<div class="sliders">
+  <app-amount-slider
+    *ngFor="let slider of collectionConfig.sliders; let idx = index"
+    [name]="slider.name"
+    [max]="slider.max"
+    [min]="slider.min"
+    [valueInCal]="sliderVals[idx]"
+    [calPerGram]="slider.referenceValue / slider.referenceGram"
+    (updatedValueInCal)="updateOtherSliders(idx, $event)"
+  >
+  </app-amount-slider>
+</div>

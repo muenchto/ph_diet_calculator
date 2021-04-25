@@ -1,17 +1,20 @@
-<mat-card class="result">
+<mat-card>
   <mat-card-content>
-    <h2 class="example-h2">{{ name }} ({{ min }} - {{ max }})</h2>
+    <h3>{{ name }} ({{ min }}g - {{ max }}g)</h3>
 
     <mat-slider
-      class="example-margin"
       [max]="max"
       [min]="min"
       [step]="step"
       [thumbLabel]="thumbLabel"
-      [value]="value"
-      (input)="input.emit($event)"
+      [displayWith]="displayWith"
+      [value]="_sliderVal"
+      (input)="emitValueInCal($event)"
+      class="slider"
     >
     </mat-slider>
-    <h4>{{ value }}</h4>
+    <p>
+      {{ valueInCal | number: "1.0-0" }}kcal; {{ _sliderVal | number: "1.0-0" }}g
+    </p>
   </mat-card-content>
 </mat-card>
